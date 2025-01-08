@@ -1,0 +1,22 @@
+table{
+    width: 100%;;
+}
+
+tr{
+    height: 40px;
+}
+
+tr:nth-child(odd){
+    background-color: #c2e9be;
+}
+
+tr:nth-child(even){
+    background-color: lightcyan;
+}
+
+.loading-state{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
