@@ -1,8 +1,12 @@
 // LoginPage.js
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
+import { useContext } from 'react';
+import UserContext from '../../context/UserContext/UserContext';
 
-const Login = ({ onLoginSuccess }) => {
+const Login = ({setShowLogin}) => {
+    const userContext = useContext(UserContext);
+    console.log(process.env)
     const handleLoginSuccess = async (response) => {
         console.log('Google Token:', response.credential);
         try {
@@ -11,16 +15,15 @@ const Login = ({ onLoginSuccess }) => {
                 { token: response.credential },
                 { withCredentials: true }  // To include cookies for sessions if needed
             );
-            console.log('Backend Response:', res.data);
-            onLoginSuccess(res.data.user);  // Passing user data back to parent component
-            // Save the user data to localStorage
-            localStorage.setItem('user', JSON.stringify(res.data.user));  // Storing user data in localStorage
+            userContext.login(res.data.user);  // Passing user data back to parent component
+            setShowLogin(false);
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
     return (
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <div>
             <h1>Google Sign-In</h1>
             <GoogleLogin
@@ -29,6 +32,7 @@ const Login = ({ onLoginSuccess }) => {
                 text="signin_with"
             />
         </div>
+        </GoogleOAuthProvider>
     );
 };
 
