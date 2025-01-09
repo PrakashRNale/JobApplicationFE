@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import classes from './Style.module.css';
 import UserContext from '../../context/UserContext/UserContext';
+import LoginDropdown from '../LoginDropdown/LoginDropdown';
 
 const Header = ({setShowLogin}) => {
   const userContext = useContext(UserContext);
@@ -12,7 +13,7 @@ const Header = ({setShowLogin}) => {
           {user ?
             <h2>Welcome, {user.name}</h2>
             :
-            <button className={classes.loginButton} onClick={() => setShowLogin(true)}>LONGIN</button>
+            <LoginDropdown setShowLogin={setShowLogin} />
           }
         </div>
         

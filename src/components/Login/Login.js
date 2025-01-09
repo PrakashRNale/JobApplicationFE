@@ -24,8 +24,7 @@ const Login = ({setShowLogin}) => {
 
     return (
         <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
-        <div>
-            <h1>Google Sign-In</h1>
+        <div className=''>
             <GoogleLogin
                 onSuccess={handleLoginSuccess}
                 onError={() => console.error('Google Login Failed')}
