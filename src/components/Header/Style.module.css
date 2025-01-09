@@ -1,6 +1,12 @@
 .header{
     height: 50px;   
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+
+.loginButton{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2196F3;
 }
