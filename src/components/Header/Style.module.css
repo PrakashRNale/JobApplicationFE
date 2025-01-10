@@ -10,3 +10,12 @@
     border-radius: 5px;
     background-color: #2196F3;
 }
+
+.aboutApplication{
+    text-align: left;
+}
+
+.openModal{
+    cursor: pointer;
+    text-transform: uppercase;
+}
