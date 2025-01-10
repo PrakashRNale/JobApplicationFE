@@ -17,7 +17,7 @@ const NewJobApplication = () => {
       e.preventDefault();
       try {
         
-        const resp = applyJob(mailDetails)
+        const resp = await applyJob(mailDetails)
   
         const message = resp?.data?.message || "We will send your job application on time"
         debugger;
@@ -30,6 +30,7 @@ const NewJobApplication = () => {
           dateTime : ''
         })
       } catch(err) {
+        debugger;
         const errorMessage = err?.response?.data?.error || "Something went wrong";
         alert(errorMessage);
       }

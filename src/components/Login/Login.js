@@ -9,6 +9,7 @@ const Login = ({setShowLogin}) => {
     console.log(process.env)
     const handleLoginSuccess = async (response) => {
         console.log('Google Token:', response.credential);
+        localStorage.setItem("token", response.credential)
         try {
             // Send the token to the backend to validate and fetch user info
             const res = await axios.post('http://localhost:8000/auth/google/token', 
