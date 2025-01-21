@@ -12,17 +12,17 @@ export const UserContextProvider = ({children}) =>{
 	const [user, setUser] = useState(false);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            debugger;
-            const userData = JSON.parse(storedUser);
-            setUser(userData);
-        }
+        // const storedUser = localStorage.getItem('user');
+        // if (storedUser) {
+        //     debugger;
+        //     const userData = JSON.parse(storedUser);
+        //     setUser(userData);
+        // }
     }, []);
 	const loginHandler = (userData) =>{
         debugger;
 		setUser(userData);
-        localStorage.setItem('user', JSON.stringify(userData)); 
+        // localStorage.setItem('user', JSON.stringify(userData)); 
     }
 
     const contextValue = {

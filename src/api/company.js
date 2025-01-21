@@ -1,10 +1,9 @@
 import axios from "axios";
-const API_ENDPOINT = 'http://localhost:8000';
 // const API_ENDPOINT = 'http://3.111.32.46:5000';
 
 export const applyJob = async (mailDetails) =>{
     const token = localStorage.getItem("token")
-    const resp =  await axios.post(API_ENDPOINT+"/api/apply", {
+    const resp =  await axios.post(process.env.REACT_APP_API_ENDPOINT+"/api/apply", {
         companyName : mailDetails.companyName,
         hrEmail : mailDetails.HREmail,
         hrName : mailDetails.HRName,
@@ -23,7 +22,7 @@ export const applyJob = async (mailDetails) =>{
 
 export const getAllAppliedJobs = async () =>{
     const token = localStorage.getItem("token")
-    const resp =  await axios.get(API_ENDPOINT+"/api/getApplied",{
+    const resp =  await axios.get(process.env.REACT_APP_API_ENDPOINT+"/api/getApplied",{
         headers: {
             'Authorization': `Bearer ${token}`,  // Adding token in the Authorization header
           },
