@@ -3,7 +3,7 @@
     width: 90%;
     height: calc(100vh - 100px);
     margin: 0 auto;
-    background-color: gray;
+    background-color: white;
 }
 
 .tabsContainer{
@@ -24,3 +24,4 @@
 .active{
     border-bottom: 2px solid white;
 }
+
