@@ -2,33 +2,36 @@ import { useState } from 'react';
 
 import classes from './Style.module.css';
 import { applyJob } from '../../api/company'
+import { FORMFIELDS } from '../../constants/formFields';
+import ErrorPopup from '../ErrorMessage/ErrorMessage';
+import { isValidForm } from '../../utils/validateForm';
 
 const NewJobApplication = () => {
 
-    const [mailDetails, setMailDetails] = useState({
-      companyName : '',
-      HREmail : '',
-      HRName : '',
-      subject : '',
-      dateTime : ''
-    });
+    // Generate the initial state dynamically
+    const initialState = FORMFIELDS.reduce((acc, field) => {
+      acc[field.fieldName] = ""; 
+      return acc;
+    }, {});
+
+    const [mailDetails, setMailDetails] = useState(initialState);
+    const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        
-        const resp = await applyJob(mailDetails)
-  
-        const message = resp?.data?.message || "We will send your job application on time"
-        debugger;
-        alert(message);
-        setMailDetails({
-          companyName : '',
-          HREmail : '',
-          HRName : '',
-          subject : '',
-          dateTime : ''
-        })
+
+        const formError = isValidForm(FORMFIELDS, mailDetails);
+
+        if(formError){
+          setError(formError)
+        }else{      
+          const resp = await applyJob(mailDetails)
+          const message = resp?.data?.message || "We will send your job application on time"
+          debugger;
+          alert(message);
+          setMailDetails(initialState)
+        }
       } catch(err) {
         debugger;
         const errorMessage = err?.response?.data?.error || "Something went wrong";
@@ -49,47 +52,21 @@ const NewJobApplication = () => {
       
     return (
       <div>
+        <ErrorPopup  message={error} onClose={() => setError("")} />
         <form onSubmit={handleSubmit}>
           <div>
-
-            <input 
-            type="text"
-            placeholder="Company Name"
-            value={mailDetails.companyName}
-            name='companyName'
-            onChange={handleChange}  
-            />
-
-            <input 
-            type="mail"
-            placeholder="HR Email"
-            value={mailDetails.HREmail}
-            name='HREmail'
-            onChange={handleChange}  
-            />
-
-          <input
-            type="text"
-            placeholder="HR Name"
-            value={mailDetails.HRName}
-            name='HRName'
-            onChange={handleChange}  
-            />
-
-            <input
-            type="text"
-            placeholder="Subject"
-            value={mailDetails.subject}
-            name='subject'
-            onChange={handleChange}  
-            />
-
-            <input 
-            type="datetime-local" 
-            name="dateTime"
-            value={mailDetails.dateTime}
-            onChange={handleChange} />
-
+            { FORMFIELDS.map(field =>{
+              return <div className={classes.formField}>
+                <label>{field.label} {field.isRequired ? <span className={classes.required}>*</span> : null }</label> 
+                <input 
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={mailDetails[field.fieldName]}
+                  name={field.fieldName}
+                  onChange={handleChange}  
+                />
+              </div>
+            })}
           </div>
 
           <div>
