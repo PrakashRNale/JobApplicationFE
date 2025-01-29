@@ -40,6 +40,7 @@ const NewJobApplication = () => {
         }
 
         if(formError){
+          setIsError(true);
           setMessage(formError)
         }else{      
 
@@ -123,33 +124,43 @@ const NewJobApplication = () => {
         </Modal>
         <MessagePopup  isError={isError} message={message} onClose={() => setMessage("")} />
         {/* <UserDetails /> */}
+        
         <form onSubmit={handleSubmit}>
           <div>
-            { FORMFIELDS.map(field =>{
-              return <div className={classes.formField}>
-                <label>{field.label} {field.isRequired ? <span className={classes.required}>*</span> : null }</label> 
-                <input 
+            { FORMFIELDS.map(field => (
+              <div className={classes.formField} key={field.fieldName}>
+                <label>
+                  {field.label} 
+                  {field.isRequired && <span className={classes.required}>*</span>}
+                </label>
+                <input
                   type={field.type}
                   placeholder={field.placeholder}
                   value={mailDetails[field.fieldName]}
                   name={field.fieldName}
-                  onChange={handleChange}  
+                  onChange={handleChange}
+                  className={classes.inputField}
                 />
               </div>
-            })}
+            ))}
           </div>
 
           <div>
-            <div className={classes.fileUplaod}>
-              {user.isCVUploaded ? <span>You can use Existing Resume or you can upload new</span> : <span>You have not uploaded your resume so you need to uplod it now and you can use it later</span>}
+            <div className={classes.fileUpload}>
+              {user.isCVUploaded 
+                ? <span>You can use your existing resume or upload a new one</span> 
+                : <span>You have not uploaded your resume. Please upload it now and you can use it later.</span>
+              }
               <label className={classes.customFileUpload}>
                 <input type="file" onChange={handleFileChange} />
                 Upload Resume
               </label>
-              </div>
-            <button type="submit">Send Email</button>
+            </div>
+            <button type="submit" className={classes.submitButton}>Send Email</button>
           </div>
         </form>
+
+
       </div>
     )
 }

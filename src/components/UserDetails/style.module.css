@@ -1,17 +1,25 @@
-.userDetails{
+.userDetails {
     display: flex;
-    justify-content: space-around;
-    padding: 30px 0;
+    justify-content: space-between;
+    padding: 30px 40px;
     flex-wrap: wrap;
+    gap: 10px; /* Adds space between the inputs */
+    max-width: 100%;
+    box-sizing: border-box; /* Prevents overflow due to padding */
 }
 
-.userDetails input{
+.userDetails input {
     height: 40px;
-    width: 250px;
+    width: 100%; /* Makes input take full available space */
+    max-width: 300px; /* Limits the max width of input */
     margin-bottom: 20px;
+    padding: 10px;
+    font-size: 14px; /* Adjust font size for better readability */
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-button{
+button {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -19,5 +27,22 @@ button{
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 20px;
+   
+}
+
+@media (max-width: 768px) {
+    .userDetails {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .userDetails input {
+        width: 100%; /* Make inputs full width on smaller screens */
+        max-width: none;
+    }
+
+    button {
+        width: 100%; /* Make button full width on smaller screens */
+    }
 }
