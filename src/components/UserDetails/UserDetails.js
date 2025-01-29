@@ -25,6 +25,13 @@ const UserDetails = ({ onClose }) => {
 
       };
       try {
+        
+        if(!user){
+          setIsError(true);
+          setMessage("As you are not logged in so this data will not be saved");
+          return
+        }
+
         const resp = await setUserInfo(userDetails);
 
         const modifiedUser = {

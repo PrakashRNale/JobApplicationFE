@@ -42,7 +42,13 @@ const NewJobApplication = () => {
         if(formError){
           setIsError(true);
           setMessage(formError)
-        }else{      
+        }else{    
+          
+          if(!user){
+            setIsError(true);
+            setMessage("As you are not logged in so this data will not be saved");
+            return
+          }
 
           for(let field of FORMFIELDS){
             formData.append(field.fieldName, mailDetails[field.fieldName])
