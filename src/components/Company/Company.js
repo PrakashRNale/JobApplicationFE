@@ -18,11 +18,17 @@ const Company = ({company}) => {
     return `${month} ${date} at ${hours}:${minutes}${period}`
   }
   return (
-    <tr className='company'>
-        <td>{name}</td>
-        <td>{hrname}</td>
-        <td>{isapplied ? 'Mail sent to HR' : `As planned we will send Mail on ${getTime(maildroptime)}`}</td>
-    </tr>
+    <tr className="company">
+      <td>{name}</td>
+      <td>{hrname}</td>
+      <td>
+        {isapplied ? (
+          <span style={{ color: "#2c3e50", fontWeight: "bold" }}>Mail sent to HR</span>
+        ) : (
+          <span style={{ color: "#3a7ca5", fontWeight: "bold" }}>As planned, we will send Mail on {getTime(maildroptime)}</span>
+        )}
+      </td>
+  </tr>
   )
 }
 
