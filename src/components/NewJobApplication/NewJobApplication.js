@@ -78,27 +78,48 @@ const NewJobApplication = () => {
     return (
       <div>
         <div>
-          <div >
-            <h4>Here are some Your Details</h4>
-            <div className={classes.userDetails}>
-              <div className={classes.profileDetails}>
-                <label>Linkedin profile </label>
-                {user.linkedinProfile || "Not Provided"}
-              </div>
-              <div className={classes.profileDetails}>
-                <label>Github profile </label>
-                {user.githubProfile || "Not Provided"}
-              </div>
-              <div className={classes.profileDetails}>
-                <label>Leetcode profile </label>
-                {user.leetcodeProfile || "Not Provided"}
-              </div>
+          <h4 className={classes.sectionTitle}>Here are Your Details</h4>
+          <div className={classes.userDetails}>
+            <div className={classes.profileDetails}>
+              <label>LinkedIn Profile</label>
+              {user.linkedinProfile ? (
+                <a href={user.linkedinProfile} target="_blank" rel="noopener noreferrer">
+                  {user.linkedinProfile}
+                </a>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
             </div>
-          </div >
-          <label><span onClick={() => setIsModalOpen(true)}>Click here</span> to modify/add</label>
+
+            <div className={classes.profileDetails}>
+              <label>GitHub Profile</label>
+              {user.githubProfile ? (
+                <a href={user.githubProfile} target="_blank" rel="noopener noreferrer">
+                  {user.githubProfile}
+                </a>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+
+            <div className={classes.profileDetails}>
+              <label>LeetCode Profile</label>
+              {user.leetcodeProfile ? (
+                <a href={user.leetcodeProfile} target="_blank" rel="noopener noreferrer">
+                  {user.leetcodeProfile}
+                </a>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+          </div>
+
+          <p className={classes.modifyLink}>
+            <span onClick={() => setIsModalOpen(true)}>Click here</span> to modify/add
+          </p>
         </div>
         <Modal isOpen={isModalOpen} onClose={closeModal} title="Job Application Email Scheduler">
-          <UserDetails />
+          <UserDetails onClose={closeModal} />
         </Modal>
         <MessagePopup  isError={isError} message={message} onClose={() => setMessage("")} />
         {/* <UserDetails /> */}

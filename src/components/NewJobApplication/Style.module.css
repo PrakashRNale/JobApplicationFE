@@ -78,14 +78,75 @@ form input{
     display: none;
   }
 
-  .userDetails{
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
+  .sectionTitle {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
   }
-
-  .profileDetails{
+  
+  .userDetails {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
   }
+  
+  .profileDetails {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .profileDetails:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profileDetails label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .profileDetails a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .profileDetails a:hover {
+    text-decoration: underline;
+  }
+  
+  .notProvided {
+    color: #888;
+    font-style: italic;
+  }
+  
+  .modifyLink {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .modifyLink span {
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .modifyLink span:hover {
+    text-decoration: underline;
+  }
+  

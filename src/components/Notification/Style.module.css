@@ -1,26 +1,34 @@
 .notificationBar {
-    background-color: red; /* Green background */
-    color: white;
-    padding: 10px;
-    text-align: center;
-    overflow: hidden; /* Hide overflowing text */
-    z-index: 1000;
-    font-weight: bold;
-  }
+  background: linear-gradient(135deg, #6c8ecf, #3a5f84); /* Soft blue to grey-blue gradient */
+  color: white;
+  padding: 0 20px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  position: relative; 
+  height: 40px; 
+  padding: 0 20px;
+  overflow: hidden;
+}
 
-  /* Sliding text styles */
 .slidingText {
-    display: inline-block;
-    white-space: nowrap; /* Prevent text from wrapping */
-    animation: slide-left 10s linear infinite;
-    text-transform: uppercase;
-  }
-  
-  @keyframes slide-left {
-    from {
+  display: inline-block;
+  white-space: nowrap; /* Prevents the text from wrapping */
+  text-transform: uppercase; /* Makes the text more uniform */
+  letter-spacing: 1px; /* Spacing between letters for readability */
+  /* position: absolute; Allows text to move independently of the background */
+  animation: slide-left 10s linear infinite; /* Move the text from right to left */
+  /* top: 50%; Vertically center the text */
+  padding: 10px 20px;
+  transform: translateY(-50%); /* Corrects the text's vertical position */
+}
+
+@keyframes slide-left {
+  from {
       transform: translateX(100%); /* Start off-screen to the right */
-    }
-    to {
-      transform: translateX(-100%); /* Move off-screen to the left */
-    }
   }
+  to {
+      transform: translateX(-100%); /* Move off-screen to the left */
+  }
+}

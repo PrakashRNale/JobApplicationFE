@@ -5,7 +5,7 @@ import ErrorPopup from '../ErrorMessage/ErrorMessage';
 import { setUserInfo } from '../../api/user';
 import MessagePopup from '../ErrorMessage/ErrorMessage';
 
-const UserDetails = () => {
+const UserDetails = ({ onClose }) => {
 
   const { user, setUserDetails } = useContext(UserContext);
   const [linkedinProfile, setLinkedinProfile] = useState(user.linkedinProfile || "" );
@@ -32,16 +32,15 @@ const UserDetails = () => {
           ...userDetails
         }
 
+        
         setUserDetails(modifiedUser);
         setIsError(false);
         setMessage("User Modified Successfully")
+        onClose();
       } catch (error) {
         setIsError(true)
         setMessage('user details setting failed');
       }
-
-
-      debugger;
   }
 
   return (
