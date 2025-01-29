@@ -1,0 +1,23 @@
+.userDetails{
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 0;
+    flex-wrap: wrap;
+}
+
+.userDetails input{
+    height: 40px;
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+button{
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}

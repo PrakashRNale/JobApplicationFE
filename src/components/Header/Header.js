@@ -18,7 +18,7 @@ const Header = ({setShowLogin}) => {
     <div className={classes.header}>
         <h2>Job Application Portal</h2>
         <h3 className={classes.openModal} onClick={() => setIsModalOpen(true)}>What we are helping</h3>
-        <Modal isOpen={isModalOpen} onClose={closeModal} title="What Problem we are fixing">
+        <Modal isOpen={isModalOpen} onClose={closeModal} title="Job Application Email Scheduler">
           <ApplicationUseCase />
           <button className={classes.applicationButton} onClick={closeModal}>
             Get Started Now

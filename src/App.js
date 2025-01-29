@@ -16,7 +16,7 @@ function App() {
         const fetchUserInfo = async () => {
             try {
                 const response = await getUserInfo();
-                userContext.login(response.data); // Update app state with user info
+                userContext.setUserDetails(response.data); // Update app state with user info
             } catch (error) {
                 console.error('Error fetching user info:', error);
             }

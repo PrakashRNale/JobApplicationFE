@@ -1,15 +1,18 @@
 import React from "react";
 import "./style.css"; // Import the CSS for styling
 
-const ErrorPopup = ({ message, onClose }) => {
+const MessagePopup = ({ isError = true, message, onClose }) => {
   if (!message) return null; // Don't render if there's no message
 
+  const popupClass = isError ? "error-popup" : "success-popup" ;
+  const title = isError ? "Error" : "Success" ;
+
   return (
-    <div className="error-popup-overlay">
-      <div className="error-popup">
-        <h2 className="error-popup-title">Error</h2>
-        <p className="error-popup-message">{message}</p>
-        <button className="error-popup-button" onClick={onClose}>
+    <div className="popup-overlay">
+      <div className={`popup ${popupClass}`}>
+        <h2 className="popup-title">{title}</h2>
+        <p className="popup-message">{message}</p>
+        <button className="popup-button" onClick={onClose}>
           Close
         </button>
       </div>
@@ -17,4 +20,4 @@ const ErrorPopup = ({ message, onClose }) => {
   );
 };
 
-export default ErrorPopup;
+export default MessagePopup;

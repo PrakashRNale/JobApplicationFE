@@ -4,8 +4,6 @@ import './Style.css';
 const JobApplicationUseCase = () => {
   return (
     <div className="application-container">
-      <h2 className="application-title">Job Application Email Scheduler</h2>
-
       <p className="application-description">
         Struggling to get your job application email noticed? Sending an email late at night means it gets buried in an inbox by morning.
       </p>
