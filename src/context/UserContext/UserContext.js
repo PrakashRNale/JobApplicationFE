@@ -3,7 +3,7 @@ import { useState, useEffect, createContext } from "react";
 
 const UserContext = createContext({
     user : false,  
-	login : () => { }
+	setUserDetails : () => { }
 })
 
 export default UserContext;
@@ -20,14 +20,13 @@ export const UserContextProvider = ({children}) =>{
         // }
     }, []);
 	const loginHandler = (userData) =>{
-        debugger;
 		setUser(userData);
         // localStorage.setItem('user', JSON.stringify(userData)); 
     }
 
     const contextValue = {
         user: user,
-        login :loginHandler 
+        setUserDetails :loginHandler 
     };
 
 	return (

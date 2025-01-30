@@ -1,40 +1,75 @@
-import { useState } from 'react'; 
+import { useContext, useState } from 'react'; 
 
 import classes from './Style.module.css';
 import { applyJob } from '../../api/company'
+import { FORMFIELDS } from '../../constants/formFields';
+import ErrorPopup from '../ErrorMessage/ErrorMessage';
+import { isValidForm } from '../../utils/validateForm';
+import UserContext from '../../context/UserContext/UserContext';
+import UserDetails from '../UserDetails/UserDetails';
+import Modal from '../Modal/Modal';
+import MessagePopup from '../ErrorMessage/ErrorMessage';
 
 const NewJobApplication = () => {
+    const { user } = useContext(UserContext);
+    // Generate the initial state dynamically
+    const initialState = FORMFIELDS.reduce((acc, field) => {
+      acc[field.fieldName] = user[field.fieldName] || ""; 
+      return acc;
+    }, {});
 
-    const [mailDetails, setMailDetails] = useState({
-      companyName : '',
-      HREmail : '',
-      HRName : '',
-      subject : '',
-      dateTime : ''
-    });
+    const [mailDetails, setMailDetails] = useState(initialState);
+    const [message, setMessage] = useState("");
+    const [isError, setIsError] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const closeModal = () =>[
+      setIsModalOpen(false)
+    ]
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        
-        const resp = await applyJob(mailDetails)
-  
-        const message = resp?.data?.message || "We will send your job application on time"
-        debugger;
-        alert(message);
-        setMailDetails({
-          companyName : '',
-          HREmail : '',
-          HRName : '',
-          subject : '',
-          dateTime : ''
-        })
+
+        const formError = isValidForm(FORMFIELDS, mailDetails);
+
+        const formData = new FormData();
+        if(selectedFile){
+          formData.append("file", selectedFile);
+        }
+
+        if(formError){
+          setIsError(true);
+          setMessage(formError)
+        }else{    
+          
+          if(!user){
+            setIsError(true);
+            setMessage("As you are not logged in so this data will not be saved");
+            return
+          }
+
+          for(let field of FORMFIELDS){
+            formData.append(field.fieldName, mailDetails[field.fieldName])
+          }
+
+          const resp = await applyJob(formData)
+          const message = resp?.data?.message || "We will send your job application on time"
+          setIsError(false);
+          setMessage(message);
+          setMailDetails(initialState)
+        }
       } catch(err) {
-        debugger;
+        setIsError(true);
         const errorMessage = err?.response?.data?.error || "Something went wrong";
-        alert(errorMessage);
+        setMessage(errorMessage);
       }
 
+    };
+
+    const handleFileChange = (event) => {
+      setSelectedFile(event.target.files[0]);
     };
 
     const handleChange = (e) =>{
@@ -49,53 +84,89 @@ const NewJobApplication = () => {
       
     return (
       <div>
+        <div>
+          <h4 className={classes.sectionTitle}>Here are Your Details</h4>
+          <div className={classes.userDetails}>
+            <div className={classes.profileDetails}>
+              <label>LinkedIn Profile</label>
+              {user.linkedinProfile ? (
+                <a href={user.linkedinProfile} target="_blank" rel="noopener noreferrer">
+                  {user.linkedinProfile}
+                </a>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+
+            <div className={classes.profileDetails}>
+              <label>GitHub Profile</label>
+              {user.githubProfile ? (
+                <a href={user.githubProfile} target="_blank" rel="noopener noreferrer">
+                  {user.githubProfile}
+                </a>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+
+            <div className={classes.profileDetails}>
+              <label>LeetCode Profile</label>
+              {user.leetcodeProfile ? (
+                <a href={user.leetcodeProfile} target="_blank" rel="noopener noreferrer">
+                  {user.leetcodeProfile}
+                </a>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+          </div>
+
+          <p className={classes.modifyLink}>
+            <span onClick={() => setIsModalOpen(true)}>Click here</span> to modify/add
+          </p>
+        </div>
+        <Modal isOpen={isModalOpen} onClose={closeModal} title="Job Application Email Scheduler">
+          <UserDetails onClose={closeModal} />
+        </Modal>
+        <MessagePopup  isError={isError} message={message} onClose={() => setMessage("")} />
+        {/* <UserDetails /> */}
+        
         <form onSubmit={handleSubmit}>
           <div>
-
-            <input 
-            type="text"
-            placeholder="Company Name"
-            value={mailDetails.companyName}
-            name='companyName'
-            onChange={handleChange}  
-            />
-
-            <input 
-            type="mail"
-            placeholder="HR Email"
-            value={mailDetails.HREmail}
-            name='HREmail'
-            onChange={handleChange}  
-            />
-
-          <input
-            type="text"
-            placeholder="HR Name"
-            value={mailDetails.HRName}
-            name='HRName'
-            onChange={handleChange}  
-            />
-
-            <input
-            type="text"
-            placeholder="Subject"
-            value={mailDetails.subject}
-            name='subject'
-            onChange={handleChange}  
-            />
-
-            <input 
-            type="datetime-local" 
-            name="dateTime"
-            value={mailDetails.dateTime}
-            onChange={handleChange} />
-
+            { FORMFIELDS.map(field => (
+              <div className={classes.formField} key={field.fieldName}>
+                <label>
+                  {field.label} 
+                  {field.isRequired && <span className={classes.required}>*</span>}
+                </label>
+                <input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={mailDetails[field.fieldName]}
+                  name={field.fieldName}
+                  onChange={handleChange}
+                  className={classes.inputField}
+                />
+              </div>
+            ))}
           </div>
 
           <div>
-            <button type="submit">Send Email</button>
+            <div className={classes.fileUpload}>
+              {user.isCVUploaded 
+                ? <span>You can use your existing resume or upload a new one</span> 
+                : <span>You have not uploaded your resume. Please upload it now and you can use it later.</span>
+              }
+              <label className={classes.customFileUpload}>
+                <input type="file" onChange={handleFileChange} />
+                Upload Resume
+              </label>
+            </div>
+            <button type="submit" className={classes.submitButton}>Send Email</button>
           </div>
         </form>
+
+
       </div>
     )
 }
