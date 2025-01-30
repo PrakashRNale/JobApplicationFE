@@ -11,22 +11,25 @@ function App() {
     const userContext = useContext(UserContext);  // Now this will have access to the context
     const [showLogin, setShowLogin] = useState(false); // To control login flow
 
+    const fetchUserInfo = async () => {
+        try {
+            userContext.setLoading(true);
+            const response = await getUserInfo();
+            userContext.setUserDetails(response.data); // Update app state with user info
+            userContext.setLoading(false);
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+            userContext.setLoading(false);
+        }
+    };
+
     useEffect(() => {
-
-        const fetchUserInfo = async () => {
-            try {
-                const response = await getUserInfo();
-                userContext.setUserDetails(response.data); // Update app state with user info
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-            }
-        };
-
-        if(!userContext.user){
+        if (!userContext.user && !userContext.loading) {
+            console.log('Fetching user info...');
             fetchUserInfo();
         }
+    }, []); // Run this only **once** on mount, not when user changes
     
-    }, [userContext]);
 
     return (
         <div className='App'>

@@ -34,3 +34,7 @@
   .application-button:hover {
     background-color: #45a049;
   }
+
+  .userName{
+    position: relative;
+  }

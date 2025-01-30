@@ -1,0 +1,8 @@
+.logout-container{
+    position: absolute;
+    top: 20px;
+    z-index: 1;
+    width: 150px;
+    height: 50px;
+    padding-top: 20px;
+}

@@ -1,25 +1,35 @@
-// LoginPage.js
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { useContext } from 'react';
 import UserContext from '../../context/UserContext/UserContext';
+import './style.css';
+import { logoutUser } from '../../api/user';
 
-const Login = ({setShowLogin}) => {
+const Logout = () => {
     const userContext = useContext(UserContext);
-    console.log(process.env)
-    const handleRedirectLogin = () => {
-        console.log(process.env.REACT_APP_API_ENDPOINT+'/auth/google');
-        window.location.href = process.env.REACT_APP_API_ENDPOINT+'/auth/google'; // Redirect to your backend
-    };
+    const handleLogout = async () => {
+        try {
+            await logoutUser();
+            userContext.setUserDetails(null);
+            userContext.setIsLoggedOut(true);
     
-
+            // localStorage.removeItem("firstVisit");  // Remove flag to show popup on next visit
+    
+            setTimeout(() => {
+                userContext.setLoading(false);
+            }, 300);
+    
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    
+    }
     return (
-        <div>
-            <button onClick={handleRedirectLogin}>
-                Sign in with Google
+        <div className='logout-container'>
+            <button className="logout-button" onClick={handleLogout}>
+                Logout
             </button>
         </div>
     );
 };
 
-export default Login;
+export default Logout;

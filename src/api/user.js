@@ -13,3 +13,7 @@ export const setUserInfo = async (userDetails) =>{
     });
     return resp;
 }
+
+export const logoutUser = async () =>{
+    axios.post(process.env.REACT_APP_API_ENDPOINT + "/auth/logout", {}, { withCredentials: true })
+}
