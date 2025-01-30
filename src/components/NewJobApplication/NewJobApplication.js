@@ -46,7 +46,13 @@ const NewJobApplication = () => {
           if(!user){
             setIsError(true);
             setMessage("As you are not logged in so this data will not be saved");
-            return
+            return;
+          }
+
+          if(!user?.isCVUploaded && !selectedFile){
+            setIsError(true);
+            setMessage("You have not uploaded your Resume earlier and not included this time. So plese choose a file.");
+            return;
           }
 
           for(let field of FORMFIELDS){
