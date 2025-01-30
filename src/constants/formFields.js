@@ -24,12 +24,12 @@ export const FORMFIELDS = [
         errorMessage : "Please Enter HR Email"
     },
     {
-        label : 'Email Subject',
-        fieldName : 'subject',
+        label : 'Job Position',
+        fieldName : 'role',
         type : 'text',
-        placeholder : 'Enter mail subject',
+        placeholder : 'Enter position you are applying for',
         isRequired : true,
-        errorMessage : "Please Enter Email Subject"
+        errorMessage : "Please Enter Position"
     },
 
     {

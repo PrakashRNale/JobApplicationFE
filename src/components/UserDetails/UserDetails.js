@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import classes from './style.module.css';
 import UserContext from '../../context/UserContext/UserContext';
-import ErrorPopup from '../ErrorMessage/ErrorMessage';
 import { setUserInfo } from '../../api/user';
 import MessagePopup from '../ErrorMessage/ErrorMessage';
 
@@ -12,6 +11,7 @@ const UserDetails = ({ onClose }) => {
   const [githubProfile, setGithubProfile] = useState(user?.githubProfile || "" );
   const [leetcodeProfile, setLeetcodeProfile] = useState(user?.leetcodeProfile || "" );
   const [technologies, setTechnologies] = useState(user?.technologies || "" );
+  const [expYears, setExpYears] = useState(user?.expYears || "" );
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
@@ -22,6 +22,8 @@ const UserDetails = ({ onClose }) => {
         ...(githubProfile ? { 'githubProfile': githubProfile } : {}),
         ...(leetcodeProfile ? { 'leetcodeProfile': leetcodeProfile } : {}),
         ...(technologies ? { 'technologies': technologies } : {}),
+        ...(expYears ? { 'expYears': expYears } : {}),
+
 
       };
       try {
@@ -87,6 +89,14 @@ const UserDetails = ({ onClose }) => {
                 value={technologies}
                 name="technologies"
                 onChange={(e) => setTechnologies(e.target.value)}  
+            />
+
+            <input 
+                type="number"
+                placeholder="Total years of Experience"
+                value={expYears}
+                name="expYears"
+                onChange={(e) => setExpYears(e.target.value)}  
             />
         </div>
         <button onClick={submitUserDetails}>Submit</button>

@@ -10,7 +10,7 @@ import Modal from '../Modal/Modal';
 import MessagePopup from '../ErrorMessage/ErrorMessage';
 
 const NewJobApplication = () => {
-    const { user } = useContext(UserContext);
+    const { user, setUserDetails } = useContext(UserContext);
     // Generate the initial state dynamically
     const initialState = FORMFIELDS.reduce((acc, field) => {
       acc[field.fieldName] = user?.[field.fieldName] || ""; 
@@ -63,7 +63,16 @@ const NewJobApplication = () => {
           const message = resp?.data?.message || "We will send your job application on time"
           setIsError(false);
           setMessage(message);
-          setMailDetails(initialState)
+          setMailDetails(initialState);
+
+          if(selectedFile){
+            const modifiedUser = {
+              ...user,
+              isCVUploaded : true
+            }
+            
+            setUserDetails(modifiedUser);
+          }
         }
       } catch(err) {
         setIsError(true);
@@ -124,6 +133,29 @@ const NewJobApplication = () => {
                 <span className={classes.notProvided}>Not Provided</span>
               )}
             </div>
+
+            <div className={classes.profileDetails}>
+              <label>Technologies </label>
+              {user?.technologies ? (
+                <span>
+                  {user.technologies}
+                </span>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+
+            <div className={`${classes.profileDetails} ${classes.expYears}`}>
+              <label>Years of Experience </label>
+              {user?.expYears ? (
+                <span>
+                  {user.expYears}
+                </span>
+              ) : (
+                <span className={classes.notProvided}>Not Provided</span>
+              )}
+            </div>
+
           </div>
 
           <p className={classes.modifyLink}>
