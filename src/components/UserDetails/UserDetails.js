@@ -8,10 +8,10 @@ import MessagePopup from '../ErrorMessage/ErrorMessage';
 const UserDetails = ({ onClose }) => {
 
   const { user, setUserDetails } = useContext(UserContext);
-  const [linkedinProfile, setLinkedinProfile] = useState(user.linkedinProfile || "" );
-  const [githubProfile, setGithubProfile] = useState(user.githubProfile || "" );
-  const [leetcodeProfile, setLeetcodeProfile] = useState(user.leetcodeProfile || "" );
-  const [technologies, setTechnologies] = useState(user.technologies || "" );
+  const [linkedinProfile, setLinkedinProfile] = useState(user?.linkedinProfile || "" );
+  const [githubProfile, setGithubProfile] = useState(user?.githubProfile || "" );
+  const [leetcodeProfile, setLeetcodeProfile] = useState(user?.leetcodeProfile || "" );
+  const [technologies, setTechnologies] = useState(user?.technologies || "" );
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
@@ -25,11 +25,17 @@ const UserDetails = ({ onClose }) => {
 
       };
       try {
+
+        if(Object.keys(userDetails).length == 0){
+          setIsError(true);
+          setMessage("There is nothing to Submit");
+          return;
+        }
         
         if(!user){
           setIsError(true);
-          setMessage("As you are not logged in so this data will not be saved");
-          return
+          setMessage("As you are not logged in so this data will not be saved. Please login and then fill the details");
+          return;
         }
 
         const resp = await setUserInfo(userDetails);

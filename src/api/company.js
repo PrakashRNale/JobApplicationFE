@@ -4,13 +4,6 @@ import axios from "axios";
 export const applyJob = async (formData) =>{
     const token = localStorage.getItem("token")
     const resp =  await axios.post(process.env.REACT_APP_API_ENDPOINT+"/api/apply", 
-      // {
-      //   companyName : mailDetails.companyName,
-      //   hrEmail : mailDetails.HREmail,
-      //   hrName : mailDetails.HRName,
-      //   subject : mailDetails.subject,
-      //   targetDateTime : new Date(mailDetails.dateTime).toISOString()
-      // },
       formData,
       {
         headers: {

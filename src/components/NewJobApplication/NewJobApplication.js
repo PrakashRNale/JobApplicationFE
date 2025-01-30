@@ -3,7 +3,6 @@ import { useContext, useState } from 'react';
 import classes from './Style.module.css';
 import { applyJob } from '../../api/company'
 import { FORMFIELDS } from '../../constants/formFields';
-import ErrorPopup from '../ErrorMessage/ErrorMessage';
 import { isValidForm } from '../../utils/validateForm';
 import UserContext from '../../context/UserContext/UserContext';
 import UserDetails from '../UserDetails/UserDetails';
@@ -14,7 +13,7 @@ const NewJobApplication = () => {
     const { user } = useContext(UserContext);
     // Generate the initial state dynamically
     const initialState = FORMFIELDS.reduce((acc, field) => {
-      acc[field.fieldName] = user[field.fieldName] || ""; 
+      acc[field.fieldName] = user?.[field.fieldName] || ""; 
       return acc;
     }, {});
 
@@ -47,7 +46,13 @@ const NewJobApplication = () => {
           if(!user){
             setIsError(true);
             setMessage("As you are not logged in so this data will not be saved");
-            return
+            return;
+          }
+
+          if(!user?.isCVUploaded && !selectedFile){
+            setIsError(true);
+            setMessage("You have not uploaded your Resume earlier and not included this time. So plese choose a file.");
+            return;
           }
 
           for(let field of FORMFIELDS){
@@ -89,7 +94,7 @@ const NewJobApplication = () => {
           <div className={classes.userDetails}>
             <div className={classes.profileDetails}>
               <label>LinkedIn Profile</label>
-              {user.linkedinProfile ? (
+              {user?.linkedinProfile ? (
                 <a href={user.linkedinProfile} target="_blank" rel="noopener noreferrer">
                   {user.linkedinProfile}
                 </a>
@@ -100,7 +105,7 @@ const NewJobApplication = () => {
 
             <div className={classes.profileDetails}>
               <label>GitHub Profile</label>
-              {user.githubProfile ? (
+              {user?.githubProfile ? (
                 <a href={user.githubProfile} target="_blank" rel="noopener noreferrer">
                   {user.githubProfile}
                 </a>
@@ -111,7 +116,7 @@ const NewJobApplication = () => {
 
             <div className={classes.profileDetails}>
               <label>LeetCode Profile</label>
-              {user.leetcodeProfile ? (
+              {user?.leetcodeProfile ? (
                 <a href={user.leetcodeProfile} target="_blank" rel="noopener noreferrer">
                   {user.leetcodeProfile}
                 </a>
@@ -153,7 +158,7 @@ const NewJobApplication = () => {
 
           <div>
             <div className={classes.fileUpload}>
-              {user.isCVUploaded 
+              {user?.isCVUploaded 
                 ? <span>You can use your existing resume or upload a new one</span> 
                 : <span>You have not uploaded your resume. Please upload it now and you can use it later.</span>
               }
