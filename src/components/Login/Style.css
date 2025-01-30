@@ -1,0 +1,18 @@
+/* Dropdown container */
+.login-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Button styles */
+.login-button {
+  background: linear-gradient(90deg, #4caf50, #3b9f41); /* Green gradient for depth */
+  color: white;
+  padding: 12px 25px; /* Slightly larger padding for better appearance */
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  max-width: 200px;
+  border-radius: 5px; /* Rounded corners for a modern look */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}

@@ -1,0 +1,35 @@
+/* Application Container */
+.application-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Title */
+.application-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Description */
+.application-description {
+  font-size: 16px;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+/* Section Title */
+.application-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* List Style */
+.application-list {
+  font-size: 16px;
+  margin-left: 20px;
+  text-align: left;
+}
+
