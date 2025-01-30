@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import classes from './Style.module.css';
 import UserContext from '../../context/UserContext/UserContext';
-import LoginDropdown from '../LoginDropdown/LoginDropdown';
+import Login from '../Login/Login';
 import Modal from '../Modal/Modal';
 import ApplicationUseCase from '../ApplicationUseCase/ApplicationUseCase';
 
@@ -28,7 +28,7 @@ const Header = ({setShowLogin}) => {
           {user ?
             <h2>Welcome, {user.name}</h2>
             :
-            <LoginDropdown setShowLogin={setShowLogin} />
+            <Login setShowLogin={setShowLogin} />
           }
         </div>
     </div>

@@ -2,7 +2,7 @@ import './App.css';
 import { useState, useEffect, useContext } from 'react';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Login from './components/Login/Login';
+import Login from './components/Logout/Logout';
 import JobApplication from './components/JobApplication/JobApplication';
 import UserContext, { UserContextProvider } from './context/UserContext/UserContext';
 import { getUserInfo } from './api/user';
