@@ -30,10 +30,21 @@ export const UserContextProvider = ({ children }) => {
         setIsLoggedOut(false);  // Reset logout status
     };
 
+    function deleteAllCookies() {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+        }
+    }
+   
+
     const logoutHandler = () => {
         setUser(null);
         setIsLoggedOut(true); // Mark as logged out
         localStorage.removeItem("user"); // Clear persisted user
+        deleteAllCookies();
     };
 
     const loadingHandler = (loadingState) => {

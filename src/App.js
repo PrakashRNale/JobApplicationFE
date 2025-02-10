@@ -15,11 +15,16 @@ function App() {
         try {
             userContext.setLoading(true);
             const response = await getUserInfo();
+            // if(!response.data){
+            //     throw new Error("No User found");
+            // }
             userContext.setUserDetails(response.data); // Update app state with user info
             userContext.setLoading(false);
         } catch (error) {
             console.error('Error fetching user info:', error);
             userContext.setLoading(false);
+            userContext.setUserDetails(null);
+            userContext.setIsLoggedOut(true);
         }
     };
 

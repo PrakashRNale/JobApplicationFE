@@ -22,6 +22,7 @@ const NewJobApplication = () => {
     const [isError, setIsError] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMailSending, setIsMailSending] = useState(false);
 
     const closeModal = () =>[
       setIsModalOpen(false)
@@ -59,8 +60,12 @@ const NewJobApplication = () => {
             formData.append(field.fieldName, mailDetails[field.fieldName])
           }
 
+          const sendMailAfterMilliseconds = new Date(mailDetails.dateTime) - new Date();
+          formData.append('sendMailAfterMilliseconds',sendMailAfterMilliseconds);
+          setIsMailSending(true);
           const resp = await applyJob(formData)
           const message = resp?.data?.message || "We will send your job application on time"
+          setIsMailSending(false);
           setIsError(false);
           setMessage(message);
           setMailDetails(initialState);
@@ -76,6 +81,7 @@ const NewJobApplication = () => {
         }
       } catch(err) {
         setIsError(true);
+        setIsMailSending(false);
         const errorMessage = err?.response?.data?.error || "Something went wrong";
         setMessage(errorMessage);
       }
@@ -195,15 +201,13 @@ const NewJobApplication = () => {
                 : <span>You have not uploaded your resume. Please upload it now and you can use it later.</span>
               }
               <label className={classes.customFileUpload}>
-                <input type="file" onChange={handleFileChange} />
+                <input disabled={isMailSending} type="file" onChange={handleFileChange} />
                 Upload Resume
               </label>
             </div>
-            <button type="submit" className={classes.submitButton}>Send Email</button>
+            <button type="submit" disabled={isMailSending} className={classes.submitButton}>{ isMailSending ? 'Submitting...' :  'Send Email'}</button>
           </div>
         </form>
-
-
       </div>
     )
 }
